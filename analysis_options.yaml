@@ -1,0 +1,14 @@
+include: package:very_good_analysis/analysis_options.yaml
+
+analyzer:
+  exclude:
+    - "**/*.json"
+    - "**/*.yaml"
+    - "*.yaml"
+    - "**/*.md"
+    - "**/*.txt"
+    - "**/*.g.dart"
+    - "/*.g.dart"
+    - "*.g.dart"
+linter:
+  rules:
