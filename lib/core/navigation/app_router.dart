@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:shartflix_case/core/init/di/injection_container.dart';
-import 'package:shartflix_case/core/services/token_service.dart';
+import 'package:shartflix_case/core/navigation/main_shell_page.dart';
 import 'package:shartflix_case/feature/auth/presentation/pages/login_page.dart';
 import 'package:shartflix_case/feature/auth/presentation/pages/register_page.dart';
+import 'package:shartflix_case/feature/home/presentation/pages/home_page.dart';
+import 'package:shartflix_case/feature/profile/presentation/pages/profile_page.dart';
 import 'package:shartflix_case/feature/splash/splash_page.dart';
 
 /// Custom slide transition from right to left
@@ -35,7 +36,7 @@ Page<T> _slideTransitionPage<T extends Object?>(
 final GoRouter appRouter = GoRouter(
   initialLocation: '/splash',
   routes: <RouteBase>[
-    // Splash Route
+    /// Splash Route
     GoRoute(
       path: '/splash',
       pageBuilder: (context, state) => _slideTransitionPage(
@@ -43,7 +44,8 @@ final GoRouter appRouter = GoRouter(
         state,
       ),
     ),
-    // Auth Routes
+
+    /// Auth Routes
     GoRoute(
       path: '/login',
       pageBuilder: (context, state) => _slideTransitionPage(
@@ -51,6 +53,8 @@ final GoRouter appRouter = GoRouter(
         state,
       ),
     ),
+
+    /// Register Route
     GoRoute(
       path: '/register',
       pageBuilder: (context, state) => _slideTransitionPage(
@@ -58,25 +62,34 @@ final GoRouter appRouter = GoRouter(
         state,
       ),
     ),
-    GoRoute(
-      path: '/home',
-      pageBuilder: (context, state) => _slideTransitionPage(
-        Scaffold(
-          body: Column(
-            children: [
-              ///token clear button
-              ElevatedButton(
-                onPressed: () {
-                  sl<TokenService>().clearToken();
-                  appRouter.go('/splash');
-                },
-                child: const Text('Clear Token'),
-              ),
-            ],
-          ),
+
+    StatefulShellRoute.indexedStack(
+      builder: (context, state, navigationShell) {
+        return MainShellPage(navigationShell: navigationShell);
+      },
+      branches: [
+        /// Home tab
+        StatefulShellBranch(
+          routes: [
+            GoRoute(
+              path: '/home',
+              name: 'home',
+              builder: (context, state) => const HomePage(),
+            ),
+          ],
         ),
-        state,
-      ),
+
+        /// Profile tab
+        StatefulShellBranch(
+          routes: [
+            GoRoute(
+              path: '/profile',
+              name: 'profile',
+              builder: (context, state) => const ProfilePage(),
+            ),
+          ],
+        ),
+      ],
     ),
   ],
 );

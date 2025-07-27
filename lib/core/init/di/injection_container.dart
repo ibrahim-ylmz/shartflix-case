@@ -16,6 +16,14 @@ import 'package:shartflix_case/feature/auth/domain/usecases/logout_user_usecase.
 import 'package:shartflix_case/feature/auth/domain/usecases/register_user_usecase.dart';
 import 'package:shartflix_case/feature/auth/presentation/bloc/auth_bloc.dart';
 
+// Home imports
+import 'package:shartflix_case/feature/home/data/datasources/home_remote_datasource.dart';
+import 'package:shartflix_case/feature/home/data/datasources/home_remote_datasource_impl.dart';
+import 'package:shartflix_case/feature/home/data/repositories/home_repository_impl.dart';
+import 'package:shartflix_case/feature/home/domain/repositories/home_repository.dart';
+import 'package:shartflix_case/feature/home/domain/usecases/get_featured_movies.dart';
+import 'package:shartflix_case/feature/home/presentation/bloc/home_bloc.dart';
+
 /// This is the dependency injection container instance
 final GetIt sl = GetIt.instance;
 
@@ -35,6 +43,9 @@ Future<void> init() async {
 
   // Auth dependencies
   _initAuth();
+
+  // Home dependencies
+  _initHome();
 }
 
 /// Initialize auth dependencies
@@ -67,6 +78,29 @@ void _initAuth() {
         loginUserUseCase: sl<LoginUserUseCase>(),
         registerUserUseCase: sl<RegisterUserUseCase>(),
         logoutUserUseCase: sl<LogoutUserUseCase>(),
+      ),
+    );
+}
+
+/// Initialize home dependencies
+void _initHome() {
+  // Data sources
+  sl
+    ..registerLazySingleton<HomeRemoteDatasource>(
+      () => HomeRemoteDatasourceImpl(sl()),
+    )
+    // Repository
+    ..registerLazySingleton<HomeRepository>(
+      () => HomeRepositoryImpl(sl()),
+    )
+    // Use cases
+    ..registerLazySingleton<GetMovieListUseCase>(
+      () => GetMovieListUseCase(sl()),
+    )
+    // BLoC
+    ..registerFactory<HomeBloc>(
+      () => HomeBloc(
+        getMovieListUseCase: sl<GetMovieListUseCase>(),
       ),
     );
 }
