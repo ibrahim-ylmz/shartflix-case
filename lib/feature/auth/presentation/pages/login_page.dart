@@ -32,14 +32,7 @@ class _LoginPageState extends State<LoginPage> with LoginPageMixin {
           listener: (context, state) {
             if (state is AuthSuccess) {
               context.go('/home');
-            } else if (state is AuthError) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text(state.message),
-                  backgroundColor: Colors.red,
-                ),
-              );
-            }
+            } else if (state is AuthError) {}
           },
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 35, vertical: 20),
@@ -68,10 +61,7 @@ class _LoginPageState extends State<LoginPage> with LoginPageMixin {
                         prefixIcon: SvgPicture.asset(
                           'assets/icons/ic_email.svg',
                         ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {}
-                          return null;
-                        },
+                        validator: validateEmail,
                       ),
 
                       /// Password text field
@@ -82,10 +72,7 @@ class _LoginPageState extends State<LoginPage> with LoginPageMixin {
                         ),
                         controller: passwordController,
                         hintText: LocaleKeys.login_auth_password.tr(),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {}
-                          return null;
-                        },
+                        validator: validatePassword,
                       ),
                     ],
                   ),

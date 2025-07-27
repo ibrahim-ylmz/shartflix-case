@@ -1,6 +1,9 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:shartflix_case/core/init/language/locale_keys.g.dart';
+import 'package:shartflix_case/core/utils/validation_extensions.dart';
 import 'package:shartflix_case/feature/auth/presentation/bloc/auth_bloc.dart';
 import 'package:shartflix_case/feature/auth/presentation/bloc/auth_event.dart';
 import 'package:shartflix_case/feature/auth/presentation/pages/login_page.dart';
@@ -28,8 +31,27 @@ mixin LoginPageMixin on State<LoginPage> {
     super.dispose();
   }
 
+  /// Validate email field
+  String? validateEmail(String? value) {
+    if (value == null || value.isEmpty) {
+      return LocaleKeys.validate_email_empty.tr();
+    }
+    final result = value.validateEmail();
+    return result.isValid ? null : result.errorMessage;
+  }
+
+  /// Validate password field
+  String? validatePassword(String? value) {
+    if (value == null || value.isEmpty) {
+      return LocaleKeys.validate_password_empty.tr();
+    }
+    final result = value.validatePassword();
+    return result.isValid ? null : result.errorMessage;
+  }
+
   /// Handle login button press
   void onLoginPressed() {
+    // Sadece form validation kullan
     if (formKey.currentState?.validate() ?? false) {
       context.read<AuthBloc>().add(
         LoginRequested(

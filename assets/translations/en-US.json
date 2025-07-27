@@ -22,5 +22,18 @@
         "auth_register_user_agreement": "User Agreement ",
         "auth_register_user_agreement_1": "I have read and accepted. ",
         "auth_register_user_agreement_2": "Please continue by reading this agreement."
+    },
+    "validate": {
+        "email_empty": "Email field cannot be empty",
+        "email_invalid": "Please enter a valid email address",
+        "password_empty": "Password field cannot be empty",
+        "password_invalid": "Password must be at least 6 characters long",
+        "password_max_length": "Password can be at most 50 characters long",
+        "name_empty": "Name field cannot be empty",
+        "name_invalid": "Name must be at least 2 characters long",
+        "name_max_length": "Name can be at most 50 characters long",
+        "name_invalid_character": "Name can only contain letters and spaces",
+        "confirm_password_empty": "Confirm password field cannot be empty",
+        "confirm_password_invalid": "Passwords do not match"
     }
 }

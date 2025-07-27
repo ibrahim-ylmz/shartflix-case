@@ -62,15 +62,7 @@ class _RegisterPageState extends State<RegisterPage> with RegisterPageMixin {
                         prefixIcon: SvgPicture.asset(
                           'assets/icons/ic_user.svg',
                         ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter your name';
-                          }
-                          if (value.length < 2) {
-                            return 'Name must be at least 2 characters';
-                          }
-                          return null;
-                        },
+                        validator: validateName,
                       ),
 
                       // Email Field
@@ -81,15 +73,7 @@ class _RegisterPageState extends State<RegisterPage> with RegisterPageMixin {
                         prefixIcon: SvgPicture.asset(
                           'assets/icons/ic_email.svg',
                         ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter your email';
-                          }
-                          if (!value.contains('@')) {
-                            return 'Please enter a valid email';
-                          }
-                          return null;
-                        },
+                        validator: validateEmail,
                       ),
 
                       // Password Field
@@ -101,15 +85,7 @@ class _RegisterPageState extends State<RegisterPage> with RegisterPageMixin {
                         prefixIcon: SvgPicture.asset(
                           'assets/icons/ic_password.svg',
                         ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter your password';
-                          }
-                          if (value.length < 6) {
-                            return 'Password must be at least 6 characters';
-                          }
-                          return null;
-                        },
+                        validator: validatePassword,
                       ),
 
                       // Confirm Password Field
@@ -122,15 +98,7 @@ class _RegisterPageState extends State<RegisterPage> with RegisterPageMixin {
                         prefixIcon: SvgPicture.asset(
                           'assets/icons/ic_password.svg',
                         ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please confirm your password';
-                          }
-                          if (value != passwordController.text) {
-                            return 'Passwords do not match';
-                          }
-                          return null;
-                        },
+                        validator: validatePasswordConfirmation,
                       ),
                     ],
                   ),

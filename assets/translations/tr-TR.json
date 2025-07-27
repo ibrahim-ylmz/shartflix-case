@@ -22,5 +22,18 @@
         "auth_register_user_agreement": "Kullanıcı Sözleşmesini ",
         "auth_register_user_agreement_1": "okudum ve kabul ediyorum. ",
         "auth_register_user_agreement_2": "Bu sözleşmeyi okuyarak devam ediniz lütfen."
+    },
+    "validate": {
+        "email_empty": "Email alanı boş olamaz",
+        "email_invalid": "Geçerli bir email adresi giriniz",
+        "password_empty": "Şifre alanı boş olamaz",
+        "password_invalid": "Şifre en az 6 karakter olmalıdır",
+        "password_max_length": "Şifre en fazla 50 karakter olabilir",
+        "name_empty": "İsim alanı boş olamaz",
+        "name_invalid": "İsim en az 2 karakter olmalıdır",
+        "name_max_length": "İsim en fazla 50 karakter olabilir",
+        "name_invalid_character": "İsim sadece harf ve boşluk içerebilir",
+        "confirm_password_empty": "Şifre tekrarı boş olamaz",
+        "confirm_password_invalid": "Şifreler eşleşmiyor"
     }
 }

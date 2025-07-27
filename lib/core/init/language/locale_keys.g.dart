@@ -24,5 +24,17 @@ abstract class  LocaleKeys {
   static const register_auth_register_user_agreement_1 = 'register.auth_register_user_agreement_1';
   static const register_auth_register_user_agreement_2 = 'register.auth_register_user_agreement_2';
   static const register = 'register';
+  static const validate_email_empty = 'validate.email_empty';
+  static const validate_email_invalid = 'validate.email_invalid';
+  static const validate_password_empty = 'validate.password_empty';
+  static const validate_password_invalid = 'validate.password_invalid';
+  static const validate_password_max_length = 'validate.password_max_length';
+  static const validate_name_empty = 'validate.name_empty';
+  static const validate_name_invalid = 'validate.name_invalid';
+  static const validate_name_max_length = 'validate.name_max_length';
+  static const validate_name_invalid_character = 'validate.name_invalid_character';
+  static const validate_confirm_password_empty = 'validate.confirm_password_empty';
+  static const validate_confirm_password_invalid = 'validate.confirm_password_invalid';
+  static const validate = 'validate';
 
 }
