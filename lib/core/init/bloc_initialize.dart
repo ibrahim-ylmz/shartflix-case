@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shartflix_case/core/init/di/injection_container.dart';
+import 'package:shartflix_case/feature/auth/presentation/bloc/auth_bloc.dart';
 
 /// This class is used to initialize the Bloc providers
 class BlocInitialize extends StatelessWidget {
@@ -12,7 +14,11 @@ class BlocInitialize extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
-      providers: const [],
+      providers: [
+        BlocProvider<AuthBloc>(
+          create: (context) => sl<AuthBloc>(),
+        ),
+      ],
       child: child,
     );
   }

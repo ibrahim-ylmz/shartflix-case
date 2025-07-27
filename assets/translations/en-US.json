@@ -1,6 +1,26 @@
 {
-    "init": {
-        "new_user": "Create New Account",
-        "login": "Login"
+    "login": {
+        "auth_title": {
+            "title": "Welcome Back",
+            "subtitle": "Tempus varius a vitae interdum id tortor elementum tristique eleifend at."
+        },
+        "auth_email": "Email",
+        "auth_password": "Password",
+        "auth_login": "Sign In",
+        "auth_forget_password": "Forgot Password?",
+        "auth_dont_have_account": "Don't have an account?",
+        "auth_sign_up": "Sign Up!"
+    },
+    "register": {
+        "auth_register_name": "Name",
+        "auth_register_email": "Email",
+        "auth_register_password": "Password",
+        "auth_register_confirm_password": "Confirm Password",
+        "auth_register": "Sign Up",
+        "auth_register_already_have_account": "Already have an account?",
+        "auth_register_sign_in": "Sign In",
+        "auth_register_user_agreement": "User Agreement ",
+        "auth_register_user_agreement_1": "I have read and accepted. ",
+        "auth_register_user_agreement_2": "Please continue by reading this agreement."
     }
 }

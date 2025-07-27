@@ -1,6 +1,26 @@
 {
-    "init": {
-        "new_user": "Yeni Hesap Oluştur",
-        "login": "Giriş Yap"
+    "login": {
+        "auth_title": {
+            "title": "Merhabalar",
+            "subtitle": "Tempus varius a vitae interdum id tortor elementum tristique eleifend at."
+        },
+        "auth_email": "E-Posta",
+        "auth_password": "Şifre",
+        "auth_login": "Giriş Yap",
+        "auth_forget_password": "Şifremi Unuttum",
+        "auth_dont_have_account": "Bir hesabın yok mu?",
+        "auth_sign_up": "Kayıt Ol!"
+    },
+    "register": {
+        "auth_register_name": "Ad Soyad",
+        "auth_register_email": "E-Posta",
+        "auth_register_password": "Şifre",
+        "auth_register_confirm_password": "Şifre Tekrar",
+        "auth_register": "Kayıt Ol",
+        "auth_register_already_have_account": "Zaten hesabınız var mı?",
+        "auth_register_sign_in": "Giriş Yap",
+        "auth_register_user_agreement": "Kullanıcı Sözleşmesini ",
+        "auth_register_user_agreement_1": "okudum ve kabul ediyorum. ",
+        "auth_register_user_agreement_2": "Bu sözleşmeyi okuyarak devam ediniz lütfen."
     }
 }
