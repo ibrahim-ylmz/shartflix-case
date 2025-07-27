@@ -6,6 +6,30 @@ import 'package:shartflix_case/feature/auth/presentation/pages/login_page.dart';
 import 'package:shartflix_case/feature/auth/presentation/pages/register_page.dart';
 import 'package:shartflix_case/feature/splash/splash_page.dart';
 
+/// Custom slide transition from right to left
+Page<T> _slideTransitionPage<T extends Object?>(
+  Widget child,
+  GoRouterState state,
+) {
+  return CustomTransitionPage<T>(
+    key: state.pageKey,
+    child: child,
+    transitionsBuilder: (context, animation, secondaryAnimation, child) {
+      const begin = Offset(1, 0);
+      const end = Offset.zero;
+      const curve = Curves.easeInOut;
+
+      final tween = Tween(begin: begin, end: end).chain(
+        CurveTween(curve: curve),
+      );
+
+      return SlideTransition(
+        position: animation.drive(tween),
+        child: child,
+      );
+    },
+  );
+}
 
 /// AppRouter is a class that manages the application's routing.
 final GoRouter appRouter = GoRouter(
@@ -14,32 +38,44 @@ final GoRouter appRouter = GoRouter(
     // Splash Route
     GoRoute(
       path: '/splash',
-      builder: (context, state) => const SplashPage(),
+      pageBuilder: (context, state) => _slideTransitionPage(
+        const SplashPage(),
+        state,
+      ),
     ),
     // Auth Routes
     GoRoute(
       path: '/login',
-      builder: (context, state) => const LoginPage(),
+      pageBuilder: (context, state) => _slideTransitionPage(
+        const LoginPage(),
+        state,
+      ),
     ),
     GoRoute(
       path: '/register',
-      builder: (context, state) => const RegisterPage(),
+      pageBuilder: (context, state) => _slideTransitionPage(
+        const RegisterPage(),
+        state,
+      ),
     ),
     GoRoute(
       path: '/home',
-      builder: (context, state) => Scaffold(
-        body: Column(
-          children: [
-            ///token clear button
-            ElevatedButton(
-              onPressed: () {
-                sl<TokenService>().clearToken();
-                appRouter.go('/splash');
-              },
-              child: const Text('Clear Token'),
-            ),
-          ],
-        )
+      pageBuilder: (context, state) => _slideTransitionPage(
+        Scaffold(
+          body: Column(
+            children: [
+              ///token clear button
+              ElevatedButton(
+                onPressed: () {
+                  sl<TokenService>().clearToken();
+                  appRouter.go('/splash');
+                },
+                child: const Text('Clear Token'),
+              ),
+            ],
+          ),
+        ),
+        state,
       ),
     ),
   ],
