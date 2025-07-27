@@ -19,6 +19,12 @@ mixin LoginPageMixin on State<LoginPage> {
   /// Password controller for login form
   final passwordController = TextEditingController();
 
+  /// Email focus node
+  final emailFocusNode = FocusNode();
+
+  /// Password focus node
+  final passwordFocusNode = FocusNode();
+
   /// Navigate to register page
   void navigateToRegister() {
     context.push('/register');
@@ -28,6 +34,8 @@ mixin LoginPageMixin on State<LoginPage> {
   void dispose() {
     emailController.dispose();
     passwordController.dispose();
+    emailFocusNode.dispose();
+    passwordFocusNode.dispose();
     super.dispose();
   }
 

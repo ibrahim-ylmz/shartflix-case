@@ -25,12 +25,28 @@ mixin RegisterPageMixin on State<RegisterPage> {
   /// Confirm password controller
   final confirmPasswordController = TextEditingController();
 
+  /// Name focus node
+  final nameFocusNode = FocusNode();
+
+  /// Email focus node
+  final emailFocusNode = FocusNode();
+
+  /// Password focus node
+  final passwordFocusNode = FocusNode();
+
+  /// Confirm password focus node
+  final confirmPasswordFocusNode = FocusNode();
+
   @override
   void dispose() {
     nameController.dispose();
     emailController.dispose();
     passwordController.dispose();
     confirmPasswordController.dispose();
+    nameFocusNode.dispose();
+    emailFocusNode.dispose();
+    passwordFocusNode.dispose();
+    confirmPasswordFocusNode.dispose();
     super.dispose();
   }
 

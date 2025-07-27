@@ -22,6 +22,15 @@ class AuthTextField extends StatefulWidget {
 
     /// Prefix icon
     this.prefixIcon,
+
+    /// Focus node for the field
+    this.focusNode,
+
+    /// Text input action for the keyboard
+    this.textInputAction,
+
+    /// On field submitted callback
+    this.onFieldSubmitted,
     super.key,
   });
 
@@ -43,6 +52,15 @@ class AuthTextField extends StatefulWidget {
   /// Prefix icon
   final SvgPicture? prefixIcon;
 
+  /// Focus node for the field
+  final FocusNode? focusNode;
+
+  /// Text input action for the keyboard
+  final TextInputAction? textInputAction;
+
+  /// On field submitted callback
+  final void Function(String)? onFieldSubmitted;
+
   @override
   State<AuthTextField> createState() => _AuthTextFieldState();
 }
@@ -60,10 +78,13 @@ class _AuthTextFieldState extends State<AuthTextField> {
   Widget build(BuildContext context) {
     return TextFormField(
       controller: widget.controller,
+      focusNode: widget.focusNode,
       /// fix this 
       obscureText: widget.isPassword && !_isPasswordVisible,
       keyboardType: widget.keyboardType,
       validator: widget.validator,
+      textInputAction: widget.textInputAction,
+      onFieldSubmitted: widget.onFieldSubmitted,
       decoration: InputDecoration(
         hintText: widget.hintText,
         hintStyle: Theme.of(context).textTheme.bodySmall?.copyWith(

@@ -27,190 +27,216 @@ class RegisterPage extends StatefulWidget {
 class _RegisterPageState extends State<RegisterPage> with RegisterPageMixin {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        leading: const CustomBackButton(),
-      ),
-      body: SafeArea(
-        child: BlocListener<AuthBloc, AuthState>(
-          listener: (context, state) {
-            if (state is AuthSuccess) {
-              context.go('/home');
-            } else if (state is AuthError) {}
-          },
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 35, vertical: 20),
-            child: Form(
-              key: formKey,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  AuthTitle(
-                    title: LocaleKeys.login_auth_title_title.tr(),
-                    subtitle: LocaleKeys.login_auth_title_subtitle.tr(),
-                  ),
-                  SizedBox(height: MediaQuery.of(context).size.height * 0.05),
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).unfocus(),
+      child: Scaffold(
+        appBar: AppBar(
+          leading: const CustomBackButton(),
+        ),
+        body: SafeArea(
+          child: BlocListener<AuthBloc, AuthState>(
+            listener: (context, state) {
+              if (state is AuthSuccess) {
+                context.go('/home');
+              } else if (state is AuthError) {}
+            },
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 35, vertical: 20),
+              child: Form(
+                key: formKey,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    AuthTitle(
+                      title: LocaleKeys.login_auth_title_title.tr(),
+                      subtitle: LocaleKeys.login_auth_title_subtitle.tr(),
+                    ),
+                    SizedBox(height: MediaQuery.of(context).size.height * 0.05),
 
-                  Column(
-                    spacing: 15,
-                    children: [
-                      // Name Field
-                      AuthTextField(
-                        controller: nameController,
-                        hintText: LocaleKeys.register_auth_register_name.tr(),
-                        prefixIcon: SvgPicture.asset(
-                          'assets/icons/ic_user.svg',
-                        ),
-                        validator: validateName,
-                      ),
-
-                      // Email Field
-                      AuthTextField(
-                        controller: emailController,
-                        hintText: LocaleKeys.register_auth_register_email.tr(),
-                        keyboardType: TextInputType.emailAddress,
-                        prefixIcon: SvgPicture.asset(
-                          'assets/icons/ic_email.svg',
-                        ),
-                        validator: validateEmail,
-                      ),
-
-                      // Password Field
-                      AuthTextField(
-                        controller: passwordController,
-                        hintText: LocaleKeys.register_auth_register_password
-                            .tr(),
-                        isPassword: true,
-                        prefixIcon: SvgPicture.asset(
-                          'assets/icons/ic_password.svg',
-                        ),
-                        validator: validatePassword,
-                      ),
-
-                      // Confirm Password Field
-                      AuthTextField(
-                        controller: confirmPasswordController,
-                        hintText: LocaleKeys
-                            .register_auth_register_confirm_password
-                            .tr(),
-                        isPassword: true,
-                        prefixIcon: SvgPicture.asset(
-                          'assets/icons/ic_password.svg',
-                        ),
-                        validator: validatePasswordConfirmation,
-                      ),
-                    ],
-                  ),
-
-                  Padding(
-                    padding: const EdgeInsets.only(top: 15, bottom: 40),
-                    child: RichText(
-                      overflow: TextOverflow.fade,
-                      strutStyle: const StrutStyle(height: 1.2),
-                      text: TextSpan(
-                        children: [
-                          TextSpan(
-                            text: LocaleKeys
-                                .register_auth_register_user_agreement
-                                .tr(),
-                            style: CustomTextTheme.getTextTheme(
-                              Theme.of(context).colorScheme,
-                            ).titleSmall?.copyWith(color: Colors.grey),
+                    Column(
+                      spacing: 15,
+                      children: [
+                        // Name Field
+                        AuthTextField(
+                          controller: nameController,
+                          focusNode: nameFocusNode,
+                          hintText: LocaleKeys.register_auth_register_name.tr(),
+                          prefixIcon: SvgPicture.asset(
+                            'assets/icons/ic_user.svg',
                           ),
-                          TextSpan(
-                            text: LocaleKeys
-                                .register_auth_register_user_agreement_1
-                                .tr(),
-                            style: Theme.of(context).textTheme.bodySmall
-                                ?.copyWith(
-                                  color: Theme.of(
-                                    context,
-                                  ).colorScheme.onSurface,
-                                  decoration: TextDecoration.underline,
-                                  decorationColor: Theme.of(
-                                    context,
-                                  ).colorScheme.onSurface,
-                                  decorationThickness: 2,
-                                ),
+                          validator: validateName,
+                          textInputAction: TextInputAction.next,
+                          onFieldSubmitted: (_) {
+                            FocusScope.of(context).requestFocus(emailFocusNode);
+                          },
+                        ),
+
+                        // Email Field
+                        AuthTextField(
+                          controller: emailController,
+                          focusNode: emailFocusNode,
+                          hintText: LocaleKeys.register_auth_register_email
+                              .tr(),
+                          keyboardType: TextInputType.emailAddress,
+                          prefixIcon: SvgPicture.asset(
+                            'assets/icons/ic_email.svg',
                           ),
-                          TextSpan(
-                            text: LocaleKeys
-                                .register_auth_register_user_agreement_2
-                                .tr(),
-                            style: CustomTextTheme.getTextTheme(
-                              Theme.of(context).colorScheme,
-                            ).titleSmall?.copyWith(color: Colors.grey),
+                          validator: validateEmail,
+                          textInputAction: TextInputAction.next,
+                          onFieldSubmitted: (_) {
+                            FocusScope.of(
+                              context,
+                            ).requestFocus(passwordFocusNode);
+                          },
+                        ),
+
+                        // Password Field
+                        AuthTextField(
+                          controller: passwordController,
+                          focusNode: passwordFocusNode,
+                          hintText: LocaleKeys.register_auth_register_password
+                              .tr(),
+                          isPassword: true,
+                          prefixIcon: SvgPicture.asset(
+                            'assets/icons/ic_password.svg',
                           ),
-                        ],
+                          validator: validatePassword,
+                          textInputAction: TextInputAction.next,
+                          onFieldSubmitted: (_) {
+                            FocusScope.of(
+                              context,
+                            ).requestFocus(confirmPasswordFocusNode);
+                          },
+                        ),
+
+                        // Confirm Password Field
+                        AuthTextField(
+                          controller: confirmPasswordController,
+                          focusNode: confirmPasswordFocusNode,
+                          hintText: LocaleKeys
+                              .register_auth_register_confirm_password
+                              .tr(),
+                          isPassword: true,
+                          prefixIcon: SvgPicture.asset(
+                            'assets/icons/ic_password.svg',
+                          ),
+                          validator: validatePasswordConfirmation,
+                          textInputAction: TextInputAction.done,
+                          onFieldSubmitted: (_) => onRegisterPressed(),
+                        ),
+                      ],
+                    ),
+
+                    Padding(
+                      padding: const EdgeInsets.only(top: 15, bottom: 40),
+                      child: RichText(
+                        overflow: TextOverflow.fade,
+                        strutStyle: const StrutStyle(height: 1.2),
+                        text: TextSpan(
+                          children: [
+                            TextSpan(
+                              text: LocaleKeys
+                                  .register_auth_register_user_agreement
+                                  .tr(),
+                              style: CustomTextTheme.getTextTheme(
+                                Theme.of(context).colorScheme,
+                              ).titleSmall?.copyWith(color: Colors.grey),
+                            ),
+                            TextSpan(
+                              text: LocaleKeys
+                                  .register_auth_register_user_agreement_1
+                                  .tr(),
+                              style: Theme.of(context).textTheme.bodySmall
+                                  ?.copyWith(
+                                    color: Theme.of(
+                                      context,
+                                    ).colorScheme.onSurface,
+                                    decoration: TextDecoration.underline,
+                                    decorationColor: Theme.of(
+                                      context,
+                                    ).colorScheme.onSurface,
+                                    decorationThickness: 2,
+                                  ),
+                            ),
+                            TextSpan(
+                              text: LocaleKeys
+                                  .register_auth_register_user_agreement_2
+                                  .tr(),
+                              style: CustomTextTheme.getTextTheme(
+                                Theme.of(context).colorScheme,
+                              ).titleSmall?.copyWith(color: Colors.grey),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
 
-                  // Register Button
-                  BlocBuilder<AuthBloc, AuthState>(
-                    builder: (context, state) {
-                      return Padding(
-                        padding: const EdgeInsets.only(bottom: 40),
-                        child: AuthButton(
-                          text: LocaleKeys.register_auth_register.tr(),
-                          onPressed: onRegisterPressed,
-                          isLoading: state is AuthLoading,
+                    // Register Button
+                    BlocBuilder<AuthBloc, AuthState>(
+                      builder: (context, state) {
+                        return Padding(
+                          padding: const EdgeInsets.only(bottom: 40),
+                          child: AuthButton(
+                            text: LocaleKeys.register_auth_register.tr(),
+                            onPressed: onRegisterPressed,
+                            isLoading: state is AuthLoading,
+                          ),
+                        );
+                      },
+                    ),
+
+                    /// Social login buttons
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      spacing: 10,
+                      children: [
+                        SocialButton(
+                          iconSvgPath: 'assets/icons/ic_google.svg',
+                          onPressed: () {},
                         ),
-                      );
-                    },
-                  ),
+                        SocialButton(
+                          iconSvgPath: 'assets/icons/ic_apple.svg',
+                          onPressed: () {},
+                        ),
+                        SocialButton(
+                          iconSvgPath: 'assets/icons/ic_facebook.svg',
+                          onPressed: () {},
+                        ),
+                      ],
+                    ),
 
-                  /// Social login buttons
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    spacing: 10,
-                    children: [
-                      SocialButton(
-                        iconSvgPath: 'assets/icons/ic_google.svg',
-                        onPressed: () {},
-                      ),
-                      SocialButton(
-                        iconSvgPath: 'assets/icons/ic_apple.svg',
-                        onPressed: () {},
-                      ),
-                      SocialButton(
-                        iconSvgPath: 'assets/icons/ic_facebook.svg',
-                        onPressed: () {},
-                      ),
-                    ],
-                  ),
-
-                  // Login Link
-                  Padding(
-                    padding: const EdgeInsets.only(top: 30, bottom: 10),
-                    child: RichText(
-                      textAlign: TextAlign.center,
-                      text: TextSpan(
-                        text: LocaleKeys
-                            .register_auth_register_already_have_account
-                            .tr(),
-                        style: CustomTextTheme.getTextTheme(
-                          Theme.of(context).colorScheme,
-                        ).titleSmall?.copyWith(color: Colors.grey),
-                        children: [
-                          const WidgetSpan(
-                            child: SizedBox(width: 10),
-                          ),
-                          TextSpan(
-                            text: LocaleKeys.register_auth_register_sign_in
-                                .tr(),
-                            style: CustomTextTheme.getTextTheme(
-                              Theme.of(context).colorScheme,
-                            ).titleSmall,
-                            recognizer: TapGestureRecognizer()
-                              ..onTap = navigateToLogin,
-                          ),
-                        ],
+                    // Login Link
+                    Padding(
+                      padding: const EdgeInsets.only(top: 30, bottom: 10),
+                      child: RichText(
+                        textAlign: TextAlign.center,
+                        text: TextSpan(
+                          text: LocaleKeys
+                              .register_auth_register_already_have_account
+                              .tr(),
+                          style: CustomTextTheme.getTextTheme(
+                            Theme.of(context).colorScheme,
+                          ).titleSmall?.copyWith(color: Colors.grey),
+                          children: [
+                            const WidgetSpan(
+                              child: SizedBox(width: 10),
+                            ),
+                            TextSpan(
+                              text: LocaleKeys.register_auth_register_sign_in
+                                  .tr(),
+                              style: CustomTextTheme.getTextTheme(
+                                Theme.of(context).colorScheme,
+                              ).titleSmall,
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = navigateToLogin,
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),
