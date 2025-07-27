@@ -121,7 +121,13 @@ class _HomePageState extends State<HomePage> with HomePageMixin<HomePage> {
                   final movie = movies[index];
                   return ReelsMovieWidget(
                     movie: movie,
-                    onLikeToggle: () {},
+                    onLikeToggle: () {
+                      if (movie.id != null) {
+                        context.read<HomeBloc>().add(
+                          ToggleMovieLike(movie.id!),
+                        );
+                      }
+                    },
                   );
                 },
               );

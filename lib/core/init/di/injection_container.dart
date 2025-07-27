@@ -22,6 +22,7 @@ import 'package:shartflix_case/feature/home/data/datasources/home_remote_datasou
 import 'package:shartflix_case/feature/home/data/repositories/home_repository_impl.dart';
 import 'package:shartflix_case/feature/home/domain/repositories/home_repository.dart';
 import 'package:shartflix_case/feature/home/domain/usecases/get_featured_movies.dart';
+import 'package:shartflix_case/feature/home/domain/usecases/toggle_movie_like.dart';
 import 'package:shartflix_case/feature/home/presentation/bloc/home_bloc.dart';
 
 /// This is the dependency injection container instance
@@ -97,10 +98,14 @@ void _initHome() {
     ..registerLazySingleton<GetMovieListUseCase>(
       () => GetMovieListUseCase(sl()),
     )
+    ..registerLazySingleton<ToggleMovieFavoriteUseCase>(
+      () => ToggleMovieFavoriteUseCase(sl()),
+    )
     // BLoC
     ..registerFactory<HomeBloc>(
       () => HomeBloc(
         getMovieListUseCase: sl<GetMovieListUseCase>(),
+        toggleMovieFavoriteUseCase: sl<ToggleMovieFavoriteUseCase>(),
       ),
     );
 }

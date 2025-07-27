@@ -50,7 +50,7 @@ class HomeRemoteDatasourceImpl implements HomeRemoteDatasource {
   Future<void> toggleMovieFavorite(String movieId) async {
     try {
       await _networkManager.post<void>(
-        '/movie/favorites/$movieId',
+        '/movie/favorite/$movieId',
         fromJsonT: (json) => json,
       );
     } on DioException catch (e) {
