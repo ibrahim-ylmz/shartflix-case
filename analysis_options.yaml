@@ -10,5 +10,6 @@ analyzer:
     - "**/*.g.dart"
     - "/*.g.dart"
     - "*.g.dart"
+    - "**/*_model.dart"
 linter:
   rules:
