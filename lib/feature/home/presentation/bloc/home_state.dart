@@ -21,22 +21,43 @@ class HomeLoaded extends HomeState {
   /// Constructor
   const HomeLoaded({
     required this.featuredMovies,
+    this.currentPage = 1,
+    this.hasMore = true,
+    this.isLoadingMore = false,
   });
 
   /// Featured Movies
   final List<MovieEntity> featuredMovies;
 
+  /// Current page number
+  final int currentPage;
+
+  /// Whether there are more movies to load
+  final bool hasMore;
+
+  /// Whether currently loading more movies
+  final bool isLoadingMore;
+
   @override
   List<Object?> get props => [
     featuredMovies,
+    currentPage,
+    hasMore,
+    isLoadingMore,
   ];
 
   /// Copy with
   HomeLoaded copyWith({
     List<MovieEntity>? featuredMovies,
+    int? currentPage,
+    bool? hasMore,
+    bool? isLoadingMore,
   }) {
     return HomeLoaded(
       featuredMovies: featuredMovies ?? this.featuredMovies,
+      currentPage: currentPage ?? this.currentPage,
+      hasMore: hasMore ?? this.hasMore,
+      isLoadingMore: isLoadingMore ?? this.isLoadingMore,
     );
   }
 }

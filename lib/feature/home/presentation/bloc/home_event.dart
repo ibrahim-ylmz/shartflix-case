@@ -24,5 +24,8 @@ class ToggleMovieLike extends HomeEvent {
   List<Object?> get props => [movieId];
 }
 
+/// Load More Movies Event
+class LoadMoreMovies extends HomeEvent {}
+
 /// Refresh Home Data Event
 class RefreshHomeData extends HomeEvent {}

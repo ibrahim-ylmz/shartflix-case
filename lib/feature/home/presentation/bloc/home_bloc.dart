@@ -12,6 +12,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
        super(HomeInitial()) {
     on<LoadHomeData>(_onLoadHomeData);
+    on<LoadMoreMovies>(_onLoadMoreMovies);
     on<RefreshHomeData>(_onRefreshHomeData);
   }
   final GetMovieListUseCase _getMovieListUseCase;
@@ -29,6 +30,39 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         ),
       );
     } on Exception catch (e) {
+      emit(HomeError(e.toString()));
+    }
+  }
+
+  Future<void> _onLoadMoreMovies(
+    LoadMoreMovies event,
+    Emitter<HomeState> emit,
+  ) async {
+    final currentState = state;
+    if (currentState is! HomeLoaded ||
+        currentState.isLoadingMore ||
+        !currentState.hasMore) {
+      return;
+    }
+
+    emit(currentState.copyWith(isLoadingMore: true));
+
+    try {
+      final nextPage = currentState.currentPage + 1;
+      final newMovies = await _getMovieListUseCase.call(page: nextPage);
+
+      final allMovies = [...currentState.featuredMovies, ...newMovies];
+
+      emit(
+        currentState.copyWith(
+          featuredMovies: allMovies,
+          currentPage: nextPage,
+          hasMore: newMovies.length >= 5,
+          isLoadingMore: false,
+        ),
+      );
+    } on Exception catch (e) {
+      emit(currentState.copyWith(isLoadingMore: false));
       emit(HomeError(e.toString()));
     }
   }

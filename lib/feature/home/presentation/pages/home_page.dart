@@ -15,7 +15,7 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> with HomePageMixin {
+class _HomePageState extends State<HomePage> with HomePageMixin<HomePage> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -105,8 +105,19 @@ class _HomePageState extends State<HomePage> with HomePageMixin {
               return PageView.builder(
                 controller: pageController,
                 scrollDirection: Axis.vertical,
-                itemCount: movies.length,
+                itemCount: movies.length + (state.hasMore ? 1 : 0),
                 itemBuilder: (context, index) {
+                  if (index >= movies.length) {
+                    return const ColoredBox(
+                      color: Color(0xFF090909),
+                      child: Center(
+                        child: CircularProgressIndicator(
+                          color: Color(0xFFE50914),
+                        ),
+                      ),
+                    );
+                  }
+
                   final movie = movies[index];
                   return ReelsMovieWidget(
                     movie: movie,
