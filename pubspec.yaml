@@ -39,10 +39,18 @@ dependencies:
   # Image Picker
   image_picker: ^1.1.2
 
+  # Native Splash
+  flutter_native_splash: ^2.4.6
+
+  # Icons
+  flutter_launcher_icons: ^0.14.4
+  rename_app: ^1.6.5
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
+  flutter_launcher_icons: ^0.14.4
   build_runner: ^2.4.15
   go_router_builder: ^3.0.1
   very_good_analysis: ^9.0.0
@@ -54,3 +62,21 @@ flutter:
     - assets/icons/
     - assets/images/
     - assets/translations/
+
+flutter_native_splash:
+  color: "#000000"
+  image: "assets/images/img_logo.png"
+  android: true
+  ios: true
+  web: false
+  fullscreen: true
+  android_12:
+    color: "#090909"
+    image: "assets/images/img_logo.png"
+
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/images/img_logo.png"
+  min_sdk_android: 21
