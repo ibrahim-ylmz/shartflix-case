@@ -102,34 +102,43 @@ class _HomePageState extends State<HomePage> with HomePageMixin<HomePage> {
                 );
               }
 
-              return PageView.builder(
-                controller: pageController,
-                scrollDirection: Axis.vertical,
-                itemCount: movies.length + (state.hasMore ? 1 : 0),
-                itemBuilder: (context, index) {
-                  if (index >= movies.length) {
-                    return const ColoredBox(
-                      color: Color(0xFF090909),
-                      child: Center(
-                        child: CircularProgressIndicator(
-                          color: Color(0xFFE50914),
-                        ),
-                      ),
-                    );
-                  }
-
-                  final movie = movies[index];
-                  return ReelsMovieWidget(
-                    movie: movie,
-                    onLikeToggle: () {
-                      if (movie.id != null) {
-                        context.read<HomeBloc>().add(
-                          ToggleMovieLike(movie.id!),
-                        );
-                      }
-                    },
-                  );
+              return RefreshIndicator(
+                color: const Color(0xFFE50914),
+                backgroundColor: const Color(0xFF090909),
+                onRefresh: () async {
+                  context.read<HomeBloc>().add(RefreshHomeData());
+                  // Refresh işleminin tamamlanması için kısa bir bekleme
+                  await Future<void>.delayed(const Duration(milliseconds: 500));
                 },
+                child: PageView.builder(
+                  controller: pageController,
+                  scrollDirection: Axis.vertical,
+                  itemCount: movies.length + (state.hasMore ? 1 : 0),
+                  itemBuilder: (context, index) {
+                    if (index >= movies.length) {
+                      return const ColoredBox(
+                        color: Color(0xFF090909),
+                        child: Center(
+                          child: CircularProgressIndicator(
+                            color: Color(0xFFE50914),
+                          ),
+                        ),
+                      );
+                    }
+
+                    final movie = movies[index];
+                    return ReelsMovieWidget(
+                      movie: movie,
+                      onLikeToggle: () {
+                        if (movie.id != null) {
+                          context.read<HomeBloc>().add(
+                            ToggleMovieLike(movie.id!),
+                          );
+                        }
+                      },
+                    );
+                  },
+                ),
               );
             }
 

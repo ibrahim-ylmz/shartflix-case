@@ -4,7 +4,6 @@ import 'package:shartflix_case/core/network/manager/i_network_manager.dart';
 import 'package:shartflix_case/core/network/manager/network_manager.dart';
 import 'package:shartflix_case/core/services/secure_token_service.dart';
 import 'package:shartflix_case/core/services/token_service.dart';
-
 // Auth imports
 import 'package:shartflix_case/feature/auth/data/datasources/auth_remote_datasource.dart';
 import 'package:shartflix_case/feature/auth/data/datasources/auth_remote_datasource_impl.dart';
@@ -15,7 +14,6 @@ import 'package:shartflix_case/feature/auth/domain/usecases/login_user_usecase.d
 import 'package:shartflix_case/feature/auth/domain/usecases/logout_user_usecase.dart';
 import 'package:shartflix_case/feature/auth/domain/usecases/register_user_usecase.dart';
 import 'package:shartflix_case/feature/auth/presentation/bloc/auth_bloc.dart';
-
 // Home imports
 import 'package:shartflix_case/feature/home/data/datasources/home_remote_datasource.dart';
 import 'package:shartflix_case/feature/home/data/datasources/home_remote_datasource_impl.dart';
@@ -24,6 +22,14 @@ import 'package:shartflix_case/feature/home/domain/repositories/home_repository.
 import 'package:shartflix_case/feature/home/domain/usecases/get_featured_movies.dart';
 import 'package:shartflix_case/feature/home/domain/usecases/toggle_movie_like.dart';
 import 'package:shartflix_case/feature/home/presentation/bloc/home_bloc.dart';
+// Profile imports
+import 'package:shartflix_case/feature/profile/data/datasources/profile_remote_datasource.dart';
+import 'package:shartflix_case/feature/profile/data/repositories/profile_repository_impl.dart';
+import 'package:shartflix_case/feature/profile/domain/repositories/profile_repository.dart';
+import 'package:shartflix_case/feature/profile/domain/usecases/get_favorite_movies_usecase.dart';
+import 'package:shartflix_case/feature/profile/domain/usecases/get_profile_usecase.dart';
+import 'package:shartflix_case/feature/profile/domain/usecases/upload_photo_usecase.dart';
+import 'package:shartflix_case/feature/profile/presentation/bloc/profile_bloc.dart';
 
 /// This is the dependency injection container instance
 final GetIt sl = GetIt.instance;
@@ -47,6 +53,9 @@ Future<void> init() async {
 
   // Home dependencies
   _initHome();
+
+  // Profile dependencies
+  _initProfile();
 }
 
 /// Initialize auth dependencies
@@ -106,6 +115,37 @@ void _initHome() {
       () => HomeBloc(
         getMovieListUseCase: sl<GetMovieListUseCase>(),
         toggleMovieFavoriteUseCase: sl<ToggleMovieFavoriteUseCase>(),
+      ),
+    );
+}
+
+/// Initialize profile dependencies
+void _initProfile() {
+  // Data sources
+  sl
+    ..registerLazySingleton<ProfileRemoteDataSource>(
+      () => ProfileRemoteDataSourceImpl(networkManager: sl()),
+    )
+    // Repository
+    ..registerLazySingleton<ProfileRepository>(
+      () => ProfileRepositoryImpl(sl()),
+    )
+    // Use cases
+    ..registerLazySingleton<GetProfileUseCase>(
+      () => GetProfileUseCase(repository: sl()),
+    )
+    ..registerLazySingleton<GetFavoriteMoviesUseCase>(
+      () => GetFavoriteMoviesUseCase(sl()),
+    )
+    ..registerLazySingleton<UploadPhotoUseCase>(
+      () => UploadPhotoUseCase(repository: sl()),
+    )
+    // BLoC
+    ..registerFactory<ProfileBloc>(
+      () => ProfileBloc(
+        getProfileUseCase: sl<GetProfileUseCase>(),
+        getFavoriteMoviesUseCase: sl<GetFavoriteMoviesUseCase>(),
+        uploadPhotoUseCase: sl<UploadPhotoUseCase>(),
       ),
     );
 }
