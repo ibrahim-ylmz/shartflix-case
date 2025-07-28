@@ -4,6 +4,7 @@ import 'package:shartflix_case/feature/profile/presentation/bloc/profile_bloc.da
 import 'package:shartflix_case/feature/profile/presentation/bloc/profile_event.dart';
 import 'package:shartflix_case/feature/profile/presentation/bloc/profile_state.dart';
 import 'package:shartflix_case/feature/profile/presentation/widgets/favorite_movies_grid.dart';
+import 'package:shartflix_case/feature/profile/presentation/widgets/premium_offer_sheet_simple.dart';
 import 'package:shartflix_case/feature/profile/presentation/widgets/profile_header.dart';
 import 'package:shartflix_case/shared/widgets/custom_back_button.dart';
 
@@ -58,6 +59,17 @@ class _ProfilePageState extends State<ProfilePage>
     }
   }
 
+  void _showPremiumOfferSheet(BuildContext context) {
+    showModalBottomSheet<void>(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (BuildContext context) {
+        return const PremiumOfferSheet();
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     super.build(context);
@@ -65,7 +77,9 @@ class _ProfilePageState extends State<ProfilePage>
     return Scaffold(
       backgroundColor: const Color(0xFF090909),
       appBar: AppBar(
-        leading: const CustomBackButton(),
+        leading: CustomBackButton(
+          onPressed: () => null,
+        ),
         leadingWidth: 90,
         centerTitle: true,
         title: Text(
@@ -80,7 +94,7 @@ class _ProfilePageState extends State<ProfilePage>
           Container(
             padding: const EdgeInsets.only(right: 30),
             child: ElevatedButton(
-              onPressed: () {},
+              onPressed: () => _showPremiumOfferSheet(context),
               style: ElevatedButton.styleFrom(
                 backgroundColor: const Color(0xFFE50914),
                 padding: const EdgeInsets.symmetric(

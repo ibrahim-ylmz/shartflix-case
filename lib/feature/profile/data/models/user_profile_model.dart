@@ -1,3 +1,5 @@
+import 'package:shartflix_case/feature/profile/domain/entities/user_profile_entity.dart';
+
 class UserProfileModel {
   final String id;
   final String name;
