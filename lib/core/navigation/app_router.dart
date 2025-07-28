@@ -4,6 +4,7 @@ import 'package:shartflix_case/core/navigation/main_shell_page.dart';
 import 'package:shartflix_case/feature/auth/presentation/pages/login_page.dart';
 import 'package:shartflix_case/feature/auth/presentation/pages/register_page.dart';
 import 'package:shartflix_case/feature/home/presentation/pages/home_page.dart';
+import 'package:shartflix_case/feature/profile/presentation/pages/photo_upload_page.dart';
 import 'package:shartflix_case/feature/profile/presentation/pages/profile_page.dart';
 import 'package:shartflix_case/feature/splash/splash_page.dart';
 
@@ -59,6 +60,15 @@ final GoRouter appRouter = GoRouter(
       path: '/register',
       pageBuilder: (context, state) => _slideTransitionPage(
         const RegisterPage(),
+        state,
+      ),
+    ),
+
+    /// Photo Upload Route
+    GoRoute(
+      path: '/photo-upload',
+      pageBuilder: (context, state) => _slideTransitionPage(
+        const PhotoUploadPage(),
         state,
       ),
     ),

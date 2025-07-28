@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:shartflix_case/feature/profile/domain/entities/user_profile_entity.dart';
 
 /// Profile header widget displaying user info and action buttons.
@@ -7,7 +8,6 @@ class ProfileHeader extends StatelessWidget {
   const ProfileHeader({
     required this.profile,
     required this.isUploadingPhoto,
-    required this.onPhotoUpload,
     super.key,
   });
 
@@ -16,9 +16,6 @@ class ProfileHeader extends StatelessWidget {
 
   /// Whether photo upload is in progress.
   final bool isUploadingPhoto;
-
-  /// Callback for photo upload.
-  final VoidCallback onPhotoUpload;
 
   @override
   Widget build(BuildContext context) {
@@ -90,7 +87,7 @@ class ProfileHeader extends StatelessWidget {
 
             // Photo upload button
             ElevatedButton(
-              onPressed: isUploadingPhoto ? null : onPhotoUpload,
+              onPressed: isUploadingPhoto ? null : () => context.push('/photo-upload'),
               style: ElevatedButton.styleFrom(
                 backgroundColor: const Color(0xFFE50914),
                 padding: const EdgeInsets.symmetric(

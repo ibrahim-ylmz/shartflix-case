@@ -182,7 +182,6 @@ class _ProfilePageState extends State<ProfilePage>
                       ProfileHeader(
                         profile: state.profile,
                         isUploadingPhoto: state.isUploadingPhoto,
-                        onPhotoUpload: () {},
                       ),
                       const SizedBox(height: 24),
                       Expanded(
